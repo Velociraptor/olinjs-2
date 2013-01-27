@@ -5,6 +5,7 @@
 
 var express = require('express')
   , routes = require('./routes')
+  , User = require('./models/user')
   , user = require('./routes/user')
   , http = require('http')
   , mongoose = require('mongoose')
@@ -35,7 +36,7 @@ app.configure('development', function(){
 
 app.get('/', routes.index);
 app.get('/users', user.list);
-app.get('/users/new', user.new);
+//app.get('/users/new', user.new);
 app.get('/cats/new', function (req, res) {
     var kitty = new Cat({ name: 'Zildjian' });
     kitty.save(function (err) {
@@ -45,6 +46,10 @@ app.get('/cats/new', function (req, res) {
 });
 });
 
+// this should really be a post, but we'll cover that later
+// once we get to AJAX
+app.get('/users/new', user.create);
 http.createServer(app).listen(app.get('port'), function(){
   console.log("Express server listening on port " + app.get('port'));
 });
+
